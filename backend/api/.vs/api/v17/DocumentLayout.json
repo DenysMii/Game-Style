@@ -1,0 +1,197 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\dockerfile||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:dockerfile||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\repositories\\igamerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:repositories\\igamerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\dtos\\gamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:dtos\\gamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\models\\mediafile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:models\\mediafile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\services\\gameservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:services\\gameservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\controllers\\gamescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:controllers\\gamescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\repositories\\gamerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:repositories\\gamerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\models\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:models\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|c:\\users\\denys\\desktop\\\u0456\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0432\u043F\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7D9F301F-7B72-427B-8BBE-8FC6266ACB8A}|api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "dockerfile",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\dockerfile",
+              "RelativeDocumentMoniker": "dockerfile",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\dockerfile",
+              "RelativeToolTip": "dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-06-15T18:50:00.201Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAADMAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T18:46:41.135Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IGameRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Repositories\\IGameRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IGameRepository.cs",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Repositories\\IGameRepository.cs",
+              "RelativeToolTip": "Repositories\\IGameRepository.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAQwBAAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-12T17:36:33.874Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAACVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-10T19:42:36.403Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GamesController.cs",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Controllers\\GamesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GamesController.cs",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Controllers\\GamesController.cs",
+              "RelativeToolTip": "Controllers\\GamesController.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAowH8AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T19:41:16.793Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GameRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Repositories\\GameRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\GameRepository.cs",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Repositories\\GameRepository.cs",
+              "RelativeToolTip": "Repositories\\GameRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T19:40:16.367Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MediaFile.cs",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Models\\MediaFile.cs",
+              "RelativeDocumentMoniker": "Models\\MediaFile.cs",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Models\\MediaFile.cs",
+              "RelativeToolTip": "Models\\MediaFile.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwAoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T19:39:43.339Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Game.cs",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Models\\Game.cs",
+              "RelativeDocumentMoniker": "Models\\Game.cs",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Models\\Game.cs",
+              "RelativeToolTip": "Models\\Game.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwCoAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T19:39:39.729Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GameDto.cs",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\DTOs\\GameDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\GameDto.cs",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\DTOs\\GameDto.cs",
+              "RelativeToolTip": "DTOs\\GameDto.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAUwAUAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T18:35:30.754Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GameService.cs",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Services\\GameService.cs",
+              "RelativeDocumentMoniker": "Services\\GameService.cs",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Services\\GameService.cs",
+              "RelativeToolTip": "Services\\GameService.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAcwHcAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T19:39:28.363Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\Denys\\Desktop\\\u0406\u0433\u0440\u043E\u0432\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u0412\u041F\\api\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T18:33:49.214Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
