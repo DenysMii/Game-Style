@@ -135,14 +135,14 @@ function App() {
     e.preventDefault();
     if (searchQuery.trim()) {
       console.log('Searching for:', searchQuery);
-      
+
       // Спочатуa змінюємо стан
       setSelectedCategory('');
       setCurrentView('search');
-      
+
       // Потім встановлюємо пошуковий запит, що викличе useEffect для search
       setActualSearchQuery(searchQuery.trim());
-      
+
       // Скидаємо пагінацію
       setPagination({
         page: 1,
@@ -330,11 +330,22 @@ function App() {
         <div className="modal" onClick={() => setSelectedGame(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <img
-                src={`${CLOUDINARY_BASE}${selectedGame.mediaFile?.firstMediaFile || selectedGame.banner}`}
-                alt={selectedGame.title}
-                className="modal-banner"
-              />
+              {selectedGame.mediaFile.icon && (
+                <div className="modal-icon">
+                  <img
+                    src={`${CLOUDINARY_BASE}${selectedGame.mediaFile.icon}`}
+                    alt="Icon"
+                    className="modal-icon"
+                  />
+                </div>
+              )}
+              <div>
+                <h1 className="modal-title">{selectedGame.title}</h1>
+                <div className="modal-rating">
+                  <span className="stars">{renderStars(selectedGame.rating)}</span>
+                  <span>({selectedGame.rating}/5)</span>
+                </div>
+              </div>
               <button
                 className="close-btn"
                 onClick={() => setSelectedGame(null)}
@@ -343,48 +354,42 @@ function App() {
               </button>
             </div>
             <div className="modal-body">
-              <h2 className="modal-title">{selectedGame.title}</h2>
-
               <div className="modal-info">
-                <div className="info-item">
-                  <span className="info-label">Розробник: </span>
-                  <span className="info-value">{selectedGame.developer}</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Дата випуску: </span>
-                  <span className="info-value">{formatDate(selectedGame.releaseDate)}</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Жанр: </span>
-                  <span className="info-value">{selectedGame.category}</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Рейтинг: </span>
-                  <span className="info-value">
-                    {renderStars(selectedGame.rating)} ({selectedGame.rating}/5)
-                  </span>
-                </div>
+                <span className="modal-info-strong">Розробник: </span>
+                <span>{selectedGame.developer}</span>
+              </div>
+              <div className="modal-info">
+                <span className="modal-info-strong">Дата випуску: </span>
+                <span>{formatDate(selectedGame.releaseDate)}</span>
+              </div>
+              <div className="modal-info">
+                <span className="modal-info-strong">Жанр: </span>
+                <span >{selectedGame.category}</span>
               </div>
 
-              <div className="modal-description">
-                <h3>Опис гри:</h3>
-                <p>{selectedGame.description}</p>
-              </div>
+              {selectedGame.description && (
+                <div className="modal-info">
+                  <h3>Опис гри:</h3>
+                  <p>{selectedGame.description}</p>
+                </div>
+              )}
 
               {selectedGame.systemRequirements && (
-                <div className="modal-description">
+                <div className="modal-info">
                   <h3>Системні вимоги:</h3>
-                  <p>{selectedGame.systemRequirements}</p>
+                  {selectedGame.systemRequirements.split('\n').map((line, index) => (
+                    <p key={index}>{line}</p>
+                  ))}
                 </div>
               )}
 
               {selectedGame.mediaFile && (
                 <div className="media-gallery">
-                  {selectedGame.mediaFile.icon && (
+                  {selectedGame.mediaFile.firstMediaFile && (
                     <div className="media-item">
                       <img
-                        src={`${CLOUDINARY_BASE}${selectedGame.mediaFile.icon}`}
-                        alt="Icon"
+                        src={`${CLOUDINARY_BASE}${selectedGame.mediaFile.firstMediaFile}`}
+                        alt="Screenshot 1"
                         className="media-image"
                       />
                     </div>
