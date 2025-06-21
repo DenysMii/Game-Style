@@ -11,6 +11,7 @@ function App() {
   const [currentView, setCurrentView] = useState('all');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [actualSearchQuery, setActualSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
     page: 1,
@@ -34,11 +35,16 @@ function App() {
   }, []);
 
   // Fetch games based on current view
-  const fetchGames = useCallback(async (page = 1) => {
+  const fetchGames = useCallback(async (page = 1, category = null, query = null) => {
     setLoading(true);
+
     try {
       let url = `${API_BASE}/Games`;
-      
+
+      // Використовуємо передані параметри або стан
+      const actualCategory = category !== null ? category : selectedCategory;
+      const searchQueryToUse = query !== null ? query : actualSearchQuery;
+
       switch (currentView) {
         case 'all':
           url = `${API_BASE}/Games?page=${page}`;
@@ -50,18 +56,25 @@ function App() {
           url = `${API_BASE}/Games/recent?count=20`;
           break;
         case 'category':
-          url = `${API_BASE}/Games/category/${selectedCategory}?page=${page}`;
+          url = `${API_BASE}/Games/category/${encodeURIComponent(actualCategory)}?page=${page}`;
           break;
         case 'search':
-          url = `${API_BASE}/Games/search?query=${searchQuery}&page=${page}`;
+          url = `${API_BASE}/Games/search?query=${encodeURIComponent(searchQueryToUse)}&page=${page}`;
           break;
         default:
           url = `${API_BASE}/Games?page=${page}`;
       }
 
+      console.log('Fetching URL:', url);
+
       const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
-      
+
       if (data.items) {
         setGames(data.items);
         setPagination({
@@ -71,18 +84,41 @@ function App() {
           hasPreviousPage: data.hasPreviousPage
         });
       } else {
-        setGames(data);
+        setGames(Array.isArray(data) ? data : []);
+        setPagination({
+          page: 1,
+          totalPages: 1,
+          hasNextPage: false,
+          hasPreviousPage: false
+        });
       }
     } catch (error) {
       console.error('Error fetching games:', error);
+      setGames([]);
+      setPagination({
+        page: 1,
+        totalPages: 1,
+        hasNextPage: false,
+        hasPreviousPage: false
+      });
     } finally {
       setLoading(false);
     }
-  }, [currentView, selectedCategory, searchQuery]);
+  }, [currentView, selectedCategory, actualSearchQuery]);
 
+  // Контрольований useEffect - спрацьовує тільки при зміні view або category, але не при search
   useEffect(() => {
-    fetchGames();
-  }, [fetchGames]);
+    if (currentView !== 'search') {
+      fetchGames();
+    }
+  }, [currentView, selectedCategory]); // Видалили fetchGames з залежностей
+
+  // Окремий useEffect для search
+  useEffect(() => {
+    if (currentView === 'search' && actualSearchQuery) {
+      fetchGames(1, null, actualSearchQuery);
+    }
+  }, [actualSearchQuery]); // Тільки при зміні пошукового запиту
 
   // Fetch individual game details
   const fetchGameDetails = async (gameId) => {
@@ -98,15 +134,41 @@ function App() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      console.log('Searching for:', searchQuery);
+      
+      // Спочатуa змінюємо стан
+      setSelectedCategory('');
       setCurrentView('search');
-      fetchGames(1);
+      
+      // Потім встановлюємо пошуковий запит, що викличе useEffect для search
+      setActualSearchQuery(searchQuery.trim());
+      
+      // Скидаємо пагінацію
+      setPagination({
+        page: 1,
+        totalPages: 1,
+        hasNextPage: false,
+        hasPreviousPage: false
+      });
     }
   };
 
   const handleCategorySelect = (category) => {
+    console.log('Selected category:', category);
+
+    if (selectedCategory === category && currentView === 'category') {
+      return;
+    }
+
     setSelectedCategory(category);
     setCurrentView('category');
-    fetchGames(1);
+    setActualSearchQuery(''); // Очищуємо пошук при виборі категорії
+    setPagination({
+      page: 1,
+      totalPages: 1,
+      hasNextPage: false,
+      hasPreviousPage: false
+    });
   };
 
   const handleDownload = (downloadLink) => {
@@ -118,14 +180,14 @@ function App() {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
-    
+
     for (let i = 0; i < fullStars; i++) {
       stars.push('★');
     }
     if (hasHalfStar) {
       stars.push('☆');
     }
-    
+
     return stars.join('');
   };
 
@@ -147,54 +209,60 @@ function App() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button type="submit" className="search-btn" aria-label="Пошук">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    height="20"
-    width="20"
-    fill="white"
-    viewBox="0 0 24 24"
-    >
-    <path d="M21 20l-5.6-5.6A7.9 7.9 0 0018 10a8 8 0 10-8 8 7.9 7.9 0 004.4-1.4L20 21zM4 10a6 6 0 1112 0 6 6 0 01-12 0z"/>
-  </svg>
-</button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20"
+              width="20"
+              fill="white"
+              viewBox="0 0 24 24"
+            >
+              <path d="M21 20l-5.6-5.6A7.9 7.9 0 0018 10a8 8 0 10-8 8 7.9 7.9 0 004.4-1.4L20 21zM4 10a6 6 0 1112 0 6 6 0 01-12 0z" />
+            </svg>
+          </button>
         </form>
       </header>
 
       <nav className="navigation">
         <button
-          className={`nav-btn ${currentView === 'all' ? 'active' : ''}`}
-          onClick={() => setCurrentView('all')}
+          className={`nav-btn ${currentView === 'all' && selectedCategory === '' ? 'active' : ''}`}
+          onClick={() => {
+            if (currentView === 'all' && selectedCategory === '') return;
+            setSelectedCategory('');
+            setActualSearchQuery(''); // Очищуємо пошук
+            setCurrentView('all');
+          }}
         >
           Всі ігри
         </button>
         <button
           className={`nav-btn ${currentView === 'top-rated' ? 'active' : ''}`}
-          onClick={() => setCurrentView('top-rated')}
+          onClick={() => {
+            if (currentView === 'top-rated') return;
+            setSelectedCategory('');
+            setActualSearchQuery(''); // Очищуємо пошук
+            setCurrentView('top-rated');
+          }}
         >
           Топ рейтинг
         </button>
         <button
           className={`nav-btn ${currentView === 'recent' ? 'active' : ''}`}
-          onClick={() => setCurrentView('recent')}
+          onClick={() => {
+            if (currentView === 'recent') return;
+            setSelectedCategory('');
+            setActualSearchQuery(''); // Очищуємо пошук
+            setCurrentView('recent');
+          }}
         >
           Останні
         </button>
       </nav>
 
       <div className="categories">
-        <button
-          className={`category-btn ${selectedCategory === '' ? 'active' : ''}`}
-          onClick={() => {
-            setSelectedCategory('');
-            setCurrentView('all');
-          }}
-        >
-          Всі категорії
-        </button>
         {categories.map((category) => (
           <button
             key={category}
-            className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
+            className={`category-btn ${selectedCategory === category && currentView === 'category' ? 'active' : ''}`}
             onClick={() => handleCategorySelect(category)}
           >
             {category}
@@ -227,12 +295,6 @@ function App() {
                 <div className="game-content">
                   <h3 className="game-title">{game.title}</h3>
                   <p className="game-description">{game.description}</p>
-                  <div className="game-meta">
-                    <div className="game-rating">
-                      <span className="stars">★★★★★</span>
-                    </div>
-                    <span className="game-category">Гра</span>
-                  </div>
                 </div>
               </div>
             ))}
@@ -282,22 +344,22 @@ function App() {
             </div>
             <div className="modal-body">
               <h2 className="modal-title">{selectedGame.title}</h2>
-              
+
               <div className="modal-info">
                 <div className="info-item">
-                  <span className="info-label">Розробник:</span>
+                  <span className="info-label">Розробник: </span>
                   <span className="info-value">{selectedGame.developer}</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Дата випуску:</span>
+                  <span className="info-label">Дата випуску: </span>
                   <span className="info-value">{formatDate(selectedGame.releaseDate)}</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Категорія:</span>
+                  <span className="info-label">Жанр: </span>
                   <span className="info-value">{selectedGame.category}</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Рейтинг:</span>
+                  <span className="info-label">Рейтинг: </span>
                   <span className="info-value">
                     {renderStars(selectedGame.rating)} ({selectedGame.rating}/5)
                   </span>
@@ -358,13 +420,13 @@ function App() {
               )}
 
               {selectedGame.downloadLink && (
-  <button
-    className="download-btn"
-    onClick={() => handleDownload(selectedGame.downloadLink)}
-  >
-    Завантажити гру
-  </button>
-)}
+                <button
+                  className="download-btn"
+                  onClick={() => handleDownload(selectedGame.downloadLink)}
+                >
+                  Завантажити гру
+                </button>
+              )}
             </div>
           </div>
         </div>
