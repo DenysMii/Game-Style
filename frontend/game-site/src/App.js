@@ -50,10 +50,10 @@ function App() {
           url = `${API_BASE}/Games?page=${page}`;
           break;
         case 'top-rated':
-          url = `${API_BASE}/Games/top-rated?count=20`;
+          url = `${API_BASE}/Games/top-rated?count=12`;
           break;
         case 'recent':
-          url = `${API_BASE}/Games/recent?count=20`;
+          url = `${API_BASE}/Games/recent?count=12`;
           break;
         case 'category':
           url = `${API_BASE}/Games/category/${encodeURIComponent(actualCategory)}?page=${page}`;
