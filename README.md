@@ -1,74 +1,74 @@
-# Ігрова платформа
+# Gaming platform
 
-Веб-застосунок "Ігрова платформа" розробляється як частина виробничої практики для університету. Метою проєкту є створення веб-застосунку, який дозволить користувачам знаходити інформацію про ігри за категоріями та завантажувати їх.
+The Gaming Platform web application is being developed as part of the university's work experience. The aim of the project is to create a web application that will allow users to find information about games by category and download them.
 
-## Опис Проєкту
+## Project Description
 
-Проєкт являє собою веб-застосунок, що надає користувачам можливість переглядати каталог ігор, шукати їх за назвою, фільтрувати за категоріями та завантажувати файли ігор з індивідуальних сторінок.
+The project is a web application that allows users to browse a catalogue of games, search for them by name, filter by category, and download game files from individual pages.
 
-### Функціональні Можливості для користувачів (без реєстрації)
+### Functionalities for users (without registration)
 
-* Перегляд головної сторінки зі списком ігор.
-* Пошук ігор за назвою.
-* Фільтрація/перегляд ігор за визначеними категоріями.
-* Перехід на індивідуальну сторінку гри для отримання детальної інформації.
-* Завантаження файлів гри з індивідуальної сторінки гри.
+* View the main page with a list of games.
+* Search for games by name.
+* Filtering/viewing games by specific categories.
+* Go to the individual game page for more information.
+* Download game files from the individual game page.
 
-### Нефункціональні Вимоги
+### Non-Functional Requirements
 
-* **Інтерфейс**: Простий, інтуїтивно зрозумілий та зручний.
-* **Адаптивність**: Коректне відображення на різних пристроях (десктопи, планшети, смартфони).
-* **Продуктивність**: Швидке завантаження сторінок та відгук інтерфейсу.
-* **Надійність**: Стабільна робота основного функціоналу.
+* **Interface**: Simple, intuitive and user-friendly.
+* **Adaptability**: Correct display on different devices (desktops, tablets, smartphones).
+* **Performance**: Fast page loading and responsive interface.
+* **Reliability**: Stable operation of the main functionality.
 
-## Архітектура Системи
+## System architecture
 
-Система складається з клієнтської та серверної частин, що взаємодіють з базою даних та зовнішніми сервісами.
+The system consists of client and server parts that interact with the database and external services.
 
-### Технологічний Стек
+### Technology Stack
 
-* **Бекенд**: ASP.NET Core Web API (C#).
-* **Фронтенд**: React (JavaScript/TypeScript), CSS3.
-* **База даних**: MySQL.
+* **Backend**: ASP.NET Core Web API (C#).
+* **Frontend**: React (JavaScript/TypeScript), CSS3.
+* **Database**: MySQL.
 
-### Компоненти
+### Components
 
-* **Клієнтська частина (Frontend)**: Односторінковий застосунок (SPA) на React, відповідає за користувацький інтерфейс та взаємодію, взаємодіє з бекендом через RESTful API.
-* **Серверна частина (Backend)**: ASP.NET Core Web API, надає RESTful сервіси для фронтенду, реалізує бізнес-логіку, доступ до бази даних.
-* **База даних (Database)**: MySQL для зберігання інформації про ігри. Основні сутності: `Games` (ID, Title, Description, Developer, Release date, Category, Rating, Download link, System requirements) та `MediaFiles` (Game ID, Banner, Icon, 1st media file, etc.).
-* **Сховище зображень**: Cloudinary.
-* **Сховище файлів ігор**: Google Drive (або інші хостинги), зберігаються прямі посилання.
+* **Frontend**: A single-page application (SPA) in React, responsible for the user interface and interaction, interacts with the backend via RESTful API.
+* **Backend**: ASP.NET Core Web API, provides RESTful services for the frontend, implements business logic, database access.
+* **Database:** MySQL for storing information about games. Main entities: `Games` (ID, Title, Description, Developer, Release date, Category, Rating, Download link, System requirements) and `MediaFiles` (Game ID, Banner, Icon, 1st media file, etc.).
+* **Image storage**: Cloudinary.
+* **Game file storage:** Google Drive (or other hosts), direct links are saved.
 
-**Схема**:
+* **Scheme**:
 ![image](https://github.com/user-attachments/assets/e9c22b37-8de4-41ca-89bc-022a1314201a)
 
 
-## Розгортання та Хостинг
+## Deployment and Hosting
 
-* **Фронтенд**: Vercel.
-* **Бекенд**: Render.
-* **База даних**: Aiven.io.
-* **Код**: GitHub.
+**Frontend**: Vercel.
+* **Backend**: Render.
+* **Database**: Aiven.io.
+* **Code**: GitHub.
 
-## Розробка та Управління Проєктом
+## Project Development and Management.
 
-* **Середовище розробки**:
-    * Бекенд: Microsoft Visual Studio 2022.
-    * Фронтенд: Visual Studio Code (або аналогічний).
-    * СУБД: MySQL.
-* **Система контролю версій**: GitHub.
-* **Управління задачами**: Jira.
+* **Development Environment**:
+    * Backend: Microsoft Visual Studio 2022.
+    * Frontend: Visual Studio Code (or similar).
+    * Database: MySQL.
+* **Version control system**: GitHub.
+* **Task management system**: Jira.
 
-## Команда та Відповідальність
+## Team and Responsibilities
 
-Проєкт розробляється командою з двох осіб:
+The project is developed by a team of two people:
 
-* **Розробник 1 (Backend Focus)**: Проектування БД, розробка ASP.NET Core Web API, налаштування взаємодії з БД, забезпечення API ендпоінтів, базове тестування бекенду.
-* **Розробник 2 (Frontend Focus)**: Розробка React UI, інтеграція з API, реалізація клієнтської логіки, базове тестування фронтенду.
+* **Developer 1 (Backend Focus)**: Database design, ASP.NET Core Web API development, setting up interaction with the database, providing endpoint APIs, basic backend testing.
+* **Developer 2 (Frontend Focus)**: React UI development, API integration, client logic implementation, basic frontend testing.
 
-**Спільні завдання**: Планування, узгодження API, спільне тестування, документація, комунікація.
+**General tasks**: Planning, API coordination, joint testing, documentation, communication.
 
-## Примітки
+## Notes.
 
-* Наповнення бази даних контентом (іграми, описами, зображеннями, посиланнями) здійснюється розробниками вручну або за допомогою скриптів.
-* Питання безпеки (валідація даних, захист від XSS, CSRF) є важливими для майбутніх розширень, але на поточному етапі (навчальний проєкт) основний фокус на функціональності.
+* The database is filled with content (games, descriptions, images, links) by developers manually or using scripts.
+* Security issues (data validation, XSS protection, CSRF) are important for future extensions, but at the current stage (training project), the main focus is on functionality.
