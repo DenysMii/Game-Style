@@ -1,8 +1,22 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
-const API_BASE = 'https://game-style.onrender.com/api';
+const API_BASE = process.env.REACT_APP_API_BASE || 'https://game-style.onrender.com/api';
 const CLOUDINARY_BASE = 'https://res.cloudinary.com/ddkc9yscf/image/upload/';
+
+const parseJsonResponse = async (response) => {
+  const responseText = await response.text();
+
+  if (!responseText) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(responseText);
+  } catch {
+    return {};
+  }
+};
 
 function App() {
   const [games, setGames] = useState([]);
@@ -19,14 +33,24 @@ function App() {
     hasNextPage: false,
     hasPreviousPage: false
   });
+  const [authMode, setAuthMode] = useState(null);
+  const [authForm, setAuthForm] = useState({
+    username: '',
+    email: '',
+    password: '',
+    login: ''
+  });
+  const [authMessage, setAuthMessage] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(`${API_BASE}/Games/categories`);
-        const data = await response.json();
-        setCategories(data);
+        const data = await parseJsonResponse(response);
+        setCategories(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
@@ -41,7 +65,7 @@ function App() {
     try {
       let url = `${API_BASE}/Games`;
 
-      // Використовуємо передані параметри або стан
+      // Use passed parameters or current state
       const actualCategory = category !== null ? category : selectedCategory;
       const searchQueryToUse = query !== null ? query : actualSearchQuery;
 
@@ -73,7 +97,7 @@ function App() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
 
       if (data.items) {
         setGames(data.items);
@@ -106,25 +130,30 @@ function App() {
     }
   }, [currentView, selectedCategory, actualSearchQuery]);
 
-  // Контрольований useEffect - спрацьовує тільки при зміні view або category, але не при search
+  // Controlled useEffect - runs only when view or category changes, but not for search
   useEffect(() => {
     if (currentView !== 'search') {
       fetchGames();
     }
-  }, [currentView, selectedCategory]); // Видалили fetchGames з залежностей
+  }, [currentView, selectedCategory]); // Removed fetchGames from dependencies
 
-  // Окремий useEffect для search
+  // Separate useEffect for search
   useEffect(() => {
     if (currentView === 'search' && actualSearchQuery) {
       fetchGames(1, null, actualSearchQuery);
     }
-  }, [actualSearchQuery]); // Тільки при зміні пошукового запиту
+  }, [actualSearchQuery]); // Only when the search query changes
 
   // Fetch individual game details
   const fetchGameDetails = async (gameId) => {
     try {
       const response = await fetch(`${API_BASE}/Games/${gameId}`);
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       setSelectedGame(data);
     } catch (error) {
       console.error('Error fetching game details:', error);
@@ -136,14 +165,14 @@ function App() {
     if (searchQuery.trim()) {
       console.log('Searching for:', searchQuery);
 
-      // Спочатуa змінюємо стан
+      // First update state
       setSelectedCategory('');
       setCurrentView('search');
 
-      // Потім встановлюємо пошуковий запит, що викличе useEffect для search
+      // Then set the search query, which triggers the search useEffect
       setActualSearchQuery(searchQuery.trim());
 
-      // Скидаємо пагінацію
+      // Reset pagination
       setPagination({
         page: 1,
         totalPages: 1,
@@ -162,7 +191,7 @@ function App() {
 
     setSelectedCategory(category);
     setCurrentView('category');
-    setActualSearchQuery(''); // Очищуємо пошук при виборі категорії
+    setActualSearchQuery(''); // Clear search when selecting a category
     setPagination({
       page: 1,
       totalPages: 1,
@@ -174,6 +203,66 @@ function App() {
   const handleDownload = (downloadLink) => {
     const url = `https://drive.google.com/uc?export=download&id=${downloadLink}`;
     window.open(url, '_blank');
+  };
+
+  const openAuthModal = (mode) => {
+    setAuthMode(mode);
+    setAuthMessage('');
+    setAuthForm({
+      username: '',
+      email: '',
+      password: '',
+      login: ''
+    });
+  };
+
+  const handleAuthInputChange = (e) => {
+    const { name, value } = e.target;
+    setAuthForm((previousForm) => ({
+      ...previousForm,
+      [name]: value
+    }));
+  };
+
+  const handleAuthSubmit = async (e) => {
+    e.preventDefault();
+    setAuthLoading(true);
+    setAuthMessage('');
+
+    const isRegister = authMode === 'register';
+    const url = `${API_BASE}/Auth/${isRegister ? 'register' : 'login'}`;
+    const body = isRegister
+      ? {
+          username: authForm.username,
+          email: authForm.email,
+          password: authForm.password
+        }
+      : {
+          login: authForm.login,
+          password: authForm.password
+        };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      const data = await parseJsonResponse(response);
+
+      if (!response.ok) {
+        throw new Error(data.message || `Помилка авторизації (${response.status})`);
+      }
+
+      setCurrentUser(data);
+      setAuthMode(null);
+    } catch (error) {
+      setAuthMessage(error.message);
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
   const renderStars = (rating) => {
@@ -198,6 +287,15 @@ function App() {
   return (
     <div className="container">
       <header className="header">
+        <div className="auth-panel">
+          {currentUser ? (
+            <span className="auth-user">Вітаємо, {currentUser.username}</span>
+          ) : (
+            <button className="auth-open-btn" onClick={() => openAuthModal('login')}>
+              Увійти
+            </button>
+          )}
+        </div>
         <h1 className="logo">GAME STYLE</h1>
         <p className="tagline">Твоє джерело кращих ігор</p>
         <form className="search-container" onSubmit={handleSearch}>
@@ -228,7 +326,7 @@ function App() {
           onClick={() => {
             if (currentView === 'all' && selectedCategory === '') return;
             setSelectedCategory('');
-            setActualSearchQuery(''); // Очищуємо пошук
+            setActualSearchQuery(''); // Clear search
             setCurrentView('all');
           }}
         >
@@ -239,7 +337,7 @@ function App() {
           onClick={() => {
             if (currentView === 'top-rated') return;
             setSelectedCategory('');
-            setActualSearchQuery(''); // Очищуємо пошук
+            setActualSearchQuery(''); // Clear search
             setCurrentView('top-rated');
           }}
         >
@@ -250,7 +348,7 @@ function App() {
           onClick={() => {
             if (currentView === 'recent') return;
             setSelectedCategory('');
-            setActualSearchQuery(''); // Очищуємо пошук
+            setActualSearchQuery(''); // Clear search
             setCurrentView('recent');
           }}
         >
@@ -324,6 +422,80 @@ function App() {
             </div>
           )}
         </>
+      )}
+
+      {authMode && (
+        <div className="modal" onClick={() => setAuthMode(null)}>
+          <div className="modal-content auth-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="auth-modal-header">
+              <h2 className="auth-title">
+                {authMode === 'register' ? 'Реєстрація' : 'Вхід'}
+              </h2>
+              <button
+                className="close-btn"
+                onClick={() => setAuthMode(null)}
+              >
+                ×
+              </button>
+            </div>
+            <form className="auth-form" onSubmit={handleAuthSubmit}>
+              {authMode === 'register' ? (
+                <>
+                  <input
+                    type="text"
+                    name="username"
+                    className="auth-input"
+                    placeholder="Ім'я користувача"
+                    value={authForm.username}
+                    onChange={handleAuthInputChange}
+                    required
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    className="auth-input"
+                    placeholder="Email"
+                    value={authForm.email}
+                    onChange={handleAuthInputChange}
+                    required
+                  />
+                </>
+              ) : (
+                <input
+                  type="text"
+                  name="login"
+                  className="auth-input"
+                  placeholder="Ім'я користувача/Email"
+                  value={authForm.login}
+                  onChange={handleAuthInputChange}
+                  required
+                />
+              )}
+              <input
+                type="password"
+                name="password"
+                className="auth-input"
+                placeholder="Пароль"
+                value={authForm.password}
+                onChange={handleAuthInputChange}
+                required
+              />
+              {authMessage && <p className="auth-message">{authMessage}</p>}
+              <button type="submit" className="download-btn" disabled={authLoading}>
+                {authLoading ? 'Зачекайте...' : authMode === 'register' ? 'Зареєструватися' : 'Увійти'}
+              </button>
+              <button
+                type="button"
+                className="auth-switch"
+                onClick={() => openAuthModal(authMode === 'register' ? 'login' : 'register')}
+              >
+                {authMode === 'register'
+                  ? 'Вже маєте акаунт? Увійти'
+                  : 'Немає акаунта? Зареєструватися'}
+              </button>
+            </form>
+          </div>
+        </div>
       )}
 
       {selectedGame && (

@@ -12,6 +12,7 @@ namespace GamingPlatform.Data
         // Database sets for entity tables
         public DbSet<Game> Games { get; set; }
         public DbSet<MediaFile> MediaFiles { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +36,13 @@ namespace GamingPlatform.Data
                       .WithOne(g => g.MediaFile)
                       .HasForeignKey<MediaFile>(m => m.GameID)
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("Users");
+                entity.HasIndex(e => e.Username).IsUnique();
+                entity.HasIndex(e => e.Email).IsUnique();
             });
         }
     }
