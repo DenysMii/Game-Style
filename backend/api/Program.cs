@@ -33,6 +33,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Register dependencies
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddHttpClient<ICloudinaryStorageService, CloudinaryStorageService>();
+builder.Services.AddScoped<IGoogleDriveStorageService, GoogleDriveStorageService>();
 
 // Configure CORS for React client
 builder.Services.AddCors(options =>
