@@ -43,6 +43,18 @@ function App() {
   const [authMessage, setAuthMessage] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState('');
+  const [uploadForm, setUploadForm] = useState({
+    title: '',
+    description: '',
+    category: '',
+    systemRequirements: '',
+    icon: null,
+    gameplayImages: [],
+    archive: null
+  });
 
   // Fetch categories
   useEffect(() => {
@@ -265,6 +277,101 @@ function App() {
     }
   };
 
+  const openUploadModal = () => {
+    setUploadMessage('');
+    setUploadForm({
+      title: '',
+      description: '',
+      category: categories[0] || '',
+      systemRequirements: '',
+      icon: null,
+      gameplayImages: [],
+      archive: null
+    });
+    setUploadModalOpen(true);
+  };
+
+  const handleUploadInputChange = (e) => {
+    const { name, value, files } = e.target;
+
+    if (name === 'icon') {
+      setUploadForm((previousForm) => ({
+        ...previousForm,
+        icon: files[0] || null
+      }));
+      return;
+    }
+
+    if (name === 'gameplayImages') {
+      setUploadForm((previousForm) => ({
+        ...previousForm,
+        gameplayImages: Array.from(files).slice(0, 4)
+      }));
+      return;
+    }
+
+    if (name === 'archive') {
+      setUploadForm((previousForm) => ({
+        ...previousForm,
+        archive: files[0] || null
+      }));
+      return;
+    }
+
+    setUploadForm((previousForm) => ({
+      ...previousForm,
+      [name]: value
+    }));
+  };
+
+  const handleUploadSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!currentUser) {
+      setUploadMessage('Увійдіть, щоб завантажити гру.');
+      return;
+    }
+
+    setUploadLoading(true);
+    setUploadMessage('');
+
+    const formData = new FormData();
+    formData.append('userId', currentUser.id);
+    formData.append('username', currentUser.username);
+    formData.append('title', uploadForm.title);
+    formData.append('description', uploadForm.description);
+    formData.append('category', uploadForm.category);
+    formData.append('systemRequirements', uploadForm.systemRequirements);
+    formData.append('icon', uploadForm.icon);
+    formData.append('archive', uploadForm.archive);
+    uploadForm.gameplayImages.forEach((file) => {
+      formData.append('gameplayImages', file);
+    });
+
+    try {
+      const response = await fetch(`${API_BASE}/MemberGames/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await parseJsonResponse(response);
+
+      if (!response.ok) {
+        const errorMessage = data.message || data.detail || data.title || `Помилка завантаження (${response.status})`;
+        throw new Error(errorMessage);
+      }
+
+      setUploadModalOpen(false);
+      setCurrentView('recent');
+      setSelectedCategory('');
+      setActualSearchQuery('');
+      fetchGames();
+    } catch (error) {
+      setUploadMessage(error.message);
+    } finally {
+      setUploadLoading(false);
+    }
+  };
+
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -289,7 +396,12 @@ function App() {
       <header className="header">
         <div className="auth-panel">
           {currentUser ? (
-            <span className="auth-user">Вітаємо, {currentUser.username}</span>
+            <div className="member-actions">
+              <span className="auth-user">Вітаємо, {currentUser.username}</span>
+              <button className="auth-open-btn" onClick={openUploadModal}>
+                Додати гру
+              </button>
+            </div>
           ) : (
             <button className="auth-open-btn" onClick={() => openAuthModal('login')}>
               Увійти
@@ -492,6 +604,98 @@ function App() {
                 {authMode === 'register'
                   ? 'Вже маєте акаунт? Увійти'
                   : 'Немає акаунта? Зареєструватися'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {uploadModalOpen && (
+        <div className="modal" onClick={() => setUploadModalOpen(false)}>
+          <div className="modal-content upload-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="auth-modal-header">
+              <h2 className="auth-title">Завантажити гру</h2>
+              <button
+                className="close-btn"
+                onClick={() => setUploadModalOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+            <form className="auth-form upload-form" onSubmit={handleUploadSubmit}>
+              <input
+                type="text"
+                name="title"
+                className="auth-input"
+                placeholder="Назва"
+                value={uploadForm.title}
+                onChange={handleUploadInputChange}
+                required
+              />
+              <textarea
+                name="description"
+                className="auth-input upload-textarea"
+                placeholder="Опис гри"
+                value={uploadForm.description}
+                onChange={handleUploadInputChange}
+                required
+              />
+              <textarea
+                name="systemRequirements"
+                className="auth-input upload-textarea"
+                placeholder="Системні вимоги"
+                value={uploadForm.systemRequirements}
+                onChange={handleUploadInputChange}
+                required
+              />
+              <select
+                name="category"
+                className="auth-input"
+                value={uploadForm.category}
+                onChange={handleUploadInputChange}
+                required
+              >
+                <option value="" disabled>Жанр</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+              <label className="upload-label">
+                Іконка гри
+                <input
+                  type="file"
+                  name="icon"
+                  accept="image/*"
+                  onChange={handleUploadInputChange}
+                  required
+                />
+              </label>
+              <label className="upload-label">
+                Зображення геймплею
+                <input
+                  type="file"
+                  name="gameplayImages"
+                  accept="image/*"
+                  multiple
+                  onChange={handleUploadInputChange}
+                  required
+                />
+              </label>
+              <label className="upload-label">
+                Архів гри
+                <input
+                  type="file"
+                  name="archive"
+                  accept=".zip,.rar,.7z,.tar,.gz,.bz2,application/zip,application/x-rar-compressed,application/x-7z-compressed"
+                  onChange={handleUploadInputChange}
+                  required
+                />
+              </label>
+              {uploadMessage && <p className="auth-message">{uploadMessage}</p>}
+              <button type="submit" className="download-btn" disabled={uploadLoading}>
+                {uploadLoading ? 'Завантаження...' : 'Опублікувати гру'}
               </button>
             </form>
           </div>
