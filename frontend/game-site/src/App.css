@@ -321,6 +321,17 @@ body {
   font-weight: 400;
 }
 
+.upload-files-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upload-group-title {
+  color: #333;
+  font-weight: 700;
+}
+
 .auth-message {
   color: #c0392b;
   font-size: 0.95em;

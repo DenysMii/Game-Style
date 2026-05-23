@@ -52,7 +52,7 @@ function App() {
     category: '',
     systemRequirements: '',
     icon: null,
-    gameplayImages: [],
+    gameplayImages: [null, null, null, null],
     archive: null
   });
 
@@ -285,7 +285,7 @@ function App() {
       category: categories[0] || '',
       systemRequirements: '',
       icon: null,
-      gameplayImages: [],
+      gameplayImages: [null, null, null, null],
       archive: null
     });
     setUploadModalOpen(true);
@@ -302,10 +302,13 @@ function App() {
       return;
     }
 
-    if (name === 'gameplayImages') {
+    if (name.startsWith('gameplayImage')) {
+      const imageIndex = Number(name.replace('gameplayImage', ''));
       setUploadForm((previousForm) => ({
         ...previousForm,
-        gameplayImages: Array.from(files).slice(0, 4)
+        gameplayImages: previousForm.gameplayImages.map((image, index) =>
+          index === imageIndex ? files[0] || null : image
+        )
       }));
       return;
     }
@@ -332,6 +335,13 @@ function App() {
       return;
     }
 
+    const selectedGameplayImages = uploadForm.gameplayImages.filter(Boolean);
+
+    if (selectedGameplayImages.length < 1 || selectedGameplayImages.length > 4) {
+      setUploadMessage('Додайте від 1 до 4 зображень геймплею.');
+      return;
+    }
+
     setUploadLoading(true);
     setUploadMessage('');
 
@@ -344,7 +354,7 @@ function App() {
     formData.append('systemRequirements', uploadForm.systemRequirements);
     formData.append('icon', uploadForm.icon);
     formData.append('archive', uploadForm.archive);
-    uploadForm.gameplayImages.forEach((file) => {
+    selectedGameplayImages.forEach((file) => {
       formData.append('gameplayImages', file);
     });
 
@@ -672,17 +682,21 @@ function App() {
                   required
                 />
               </label>
-              <label className="upload-label">
-                Зображення геймплею
-                <input
-                  type="file"
-                  name="gameplayImages"
-                  accept="image/*"
-                  multiple
-                  onChange={handleUploadInputChange}
-                  required
-                />
-              </label>
+              <div className="upload-files-group">
+                <span className="upload-group-title">Зображення геймплею (1-4)</span>
+                {uploadForm.gameplayImages.map((image, index) => (
+                  <label className="upload-label" key={`gameplay-image-${index}`}>
+                    {index === 0 ? 'Зображення геймплею 1' : `Зображення геймплею ${index + 1} (необов'язково)`}
+                    <input
+                      type="file"
+                      name={`gameplayImage${index}`}
+                      accept="image/*"
+                      onChange={handleUploadInputChange}
+                      required={index === 0}
+                    />
+                  </label>
+                ))}
+              </div>
               <label className="upload-label">
                 Архів гри
                 <input
